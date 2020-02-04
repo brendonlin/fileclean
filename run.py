@@ -1,5 +1,3 @@
+from fileclean.view import main
 
-from fileclean import clean
-
-configPath = 'tasks.csv'
-clean.main(configPath)
+main()

@@ -1,10 +1,13 @@
-
 __pycache__
-tasks.csv
 *.cache
 *.pyw
 *.log
 .vscode
+dist
+build
+*.egg-info
 env
 tests/data
 .*_cache
+tasks.csv
+reinstall.sh

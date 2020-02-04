@@ -15,7 +15,8 @@ class Worker(ABC):
 
     def isExists(self):
         fileList = os.listdir(self.toPath)
-        return self.fromFilepath in fileList
+        basename = os.path.basename(self.fromFilepath)
+        return basename in fileList
 
 
 class DeleteWorker(Worker):
@@ -36,9 +37,5 @@ class MoveWorker(Worker):
 
 
 def selectWorker(command):
-    workers = {
-        "delete": DeleteWorker,
-        "copy": CopyWorker,
-        "move": MoveWorker
-    }
+    workers = {"delete": DeleteWorker, "copy": CopyWorker, "move": MoveWorker}
     return workers.get(command)

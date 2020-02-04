@@ -1,3 +1,0 @@
-from_path,to_path,condition,command,iscrawl
-G:/Project,None,.*\.pyc$,delete,1
-D:/Software,D:\Software\exe,.*\.(exe|msi)$,move,0

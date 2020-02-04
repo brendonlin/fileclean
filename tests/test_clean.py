@@ -1,9 +1,17 @@
-from fileclean import cleanfc as clean
+import os
+from fileclean import clean
 
 
 def test_cleanwork():
-    with open("./tests/from/file1.txt", "w") as f:
+    filename = "file1.txt"
+    fromPath = "./tests/data/from/"
+    toPath = "./tests/data/to/"
+    filepath = os.path.join(fromPath, filename)
+    toFilepath = os.path.join(toPath, filename)
+    with open(filepath, "w") as f:
         f.write("from")
-    fromPath = "./tests/from/"
-    toPath = "./tests/to/"
-    clean.cleanwork(fromPath, toPath, r".*\.txt", "move")
+    os.remove(toFilepath)
+    for i in range(2):
+        clean.cleanwork(fromPath, toPath, r".*\.txt", "move")
+        # asssert not error if task rerun
+

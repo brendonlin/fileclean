@@ -3,11 +3,11 @@
 import os
 import re
 from loguru import logger
-from fileclean import models
+from . import models
 
 
 def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
-    '''
+    """
     File clean up
 
     Parameters
@@ -26,14 +26,14 @@ def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
     Returns
     -------
     None
-    '''
+    """
     task_name = "Task {0} {2} to {1} ".format(fromPath, toPath, command)
-    logger.info('{task} start'.format(task=task_name))
+    logger.info("Start {task}".format(task=task_name))
     try:
         filenameList = os.listdir(fromPath)
         nfiles = len(filenameList)
         if nfiles == 0:
-            logger.info(f'{nfiles} files found in {fromPath}.')
+            logger.info(f"{nfiles} files found in {fromPath}.")
     except Exception as e:
         logger.error("Open %s error." % fromPath)
         logger.error(e)
@@ -49,18 +49,5 @@ def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
             Worker = models.selectWorker(command)
             worker = Worker(newPath, toPath, pattern)
             worker.work()
-            logger.info('{task} done'.format(task=task_name))
+            logger.info("{task} done".format(task=task_name))
     # logger.info('{task} end'.format(task=task_name))
-
-
-def main(configPath):
-    logger.info("Program start")
-    with open(configPath, 'r') as f:
-        config = f.read()
-    tasks = [x.split(',') for x in config.split('\n')][1:]  # Get config
-    logger.info("{n} tasks found".format(n=len(tasks)))
-    for task in tasks:
-        if len(task) == 5:
-            fromPath, toPath, pattern, command, iscrawl = task
-            cleanwork(fromPath, toPath, pattern, command, iscrawl)
-    logger.info("Program end")
