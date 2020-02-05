@@ -10,4 +10,7 @@ env
 tests/data
 .*_cache
 tasks.csv
+
+# distrube
 reinstall.sh
+upload.sh

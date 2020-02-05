@@ -1,15 +1,20 @@
-﻿# File Clean Up Tool
+﻿# File cleaning tool
+
+Fileclean is commandline tool for file cleaning.
 
 ## Features
 
 - Support delete, move or copy files.
 - Support recursive folders.
 - Support regular expression match for file names.
-- Skip if file exists in target folder and command is copy or move
 
 ## Install
-Python3 environment is required.
 
-1. Download source code
-2. Init a task file `tasks.csv` by `fileclean --init`
-3. Execute tasks: `fileclean`
+```
+pip install fileclean
+```
+
+1. Create a task file `tasks.csv`: `fileclean --init`
+2. Run tasks: 
+   * Run task file in the current directory: `fileclean`
+   * Run task file with specitfied file path: `fileclean -c taskFilePath`
