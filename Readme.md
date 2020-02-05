@@ -1,4 +1,4 @@
-﻿# Windows File Clean Up Program
+﻿# File Clean Up Tool
 
 ## Features
 

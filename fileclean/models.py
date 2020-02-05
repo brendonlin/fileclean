@@ -1,6 +1,7 @@
 import os
 import shutil
 from abc import ABC, abstractclassmethod
+from . import PathNotFoundError
 
 
 class Worker(ABC):
@@ -14,9 +15,12 @@ class Worker(ABC):
         pass
 
     def isExists(self):
-        fileList = os.listdir(self.toPath)
-        basename = os.path.basename(self.fromFilepath)
-        return basename in fileList
+        if isinstance(self.toPath, str) and os.path.exists(self.toPath):
+            fileList = os.listdir(self.toPath)
+            basename = os.path.basename(self.fromFilepath)
+            return basename in fileList
+        else:
+            raise PathNotFoundError
 
 
 class DeleteWorker(Worker):

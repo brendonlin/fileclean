@@ -1,3 +1,0 @@
-from_path,to_path,condition,command,iscrawl
-path1,path2,.*\.pyc$,delete,1
-path3,path4,.*\.(exe|msi)$,move,0

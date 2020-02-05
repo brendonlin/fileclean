@@ -7,5 +7,6 @@ setup(
     author_email="brendon.lin@outlook.com",
     description="Package for clean local files",
     packages=find_packages(),
+    install_requires=["loguru>=0.4.1"],
     entry_points={"console_scripts": ["fileclean = fileclean.view:main"]},
 )

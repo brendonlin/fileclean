@@ -2,8 +2,10 @@
 
 import os
 import re
-from loguru import logger
+from . import logger
 from . import models
+
+MAX_ITER_TIMES = 10
 
 
 def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
@@ -27,21 +29,25 @@ def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
     -------
     None
     """
-    task_name = "Task {0} {2} to {1} ".format(fromPath, toPath, command)
-    logger.info("Start {task}".format(task=task_name))
+    taskName = f"from {fromPath} {command} to {toPath}"
+    logger.info(f"Start task: {taskName}")
     try:
         filenameList = os.listdir(fromPath)
         nfiles = len(filenameList)
         if nfiles == 0:
-            logger.info(f"{nfiles} files found in {fromPath}.")
+            logger.warning(f"{nfiles} files found in {fromPath}.")
     except Exception as e:
-        logger.error("Open %s error." % fromPath)
+        logger.info("Open %s error." % fromPath)
         logger.error(e)
         return None
     for filename in filenameList:
-        newPath = fromPath + "/" + filename
+        newPath = os.path.join(fromPath, filename)
         # Handling recursive problems with folders
-        if os.path.isdir(newPath) and bool(int(iscrawl)) and iter_times < 10:
+        if (
+            os.path.isdir(newPath)
+            and bool(int(iscrawl))
+            and iter_times < MAX_ITER_TIMES
+        ):
             iter_times += 1
             logger.info(newPath, iter_times)
             cleanwork(newPath, toPath, pattern, command, iscrawl, iter_times)
@@ -49,5 +55,3 @@ def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
             Worker = models.selectWorker(command)
             worker = Worker(newPath, toPath, pattern)
             worker.work()
-            logger.info("{task} done".format(task=task_name))
-    # logger.info('{task} end'.format(task=task_name))

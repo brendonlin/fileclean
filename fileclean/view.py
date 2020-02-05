@@ -1,8 +1,7 @@
 import os
 import argparse
-import shutil
 from .clean import cleanwork
-from loguru import logger
+from . import logger
 
 TASK_TEMPLATE = template = r"""from_path,to_path,condition,command,iscrawl
 path1,path2,.*\.pyc$,delete,1
@@ -27,7 +26,7 @@ def main():
             logger.error(e)
             return False
         runTasks(config)
-    logger.info("Program end")
+    logger.infos("Program end")
 
 
 def runTasks(config):
