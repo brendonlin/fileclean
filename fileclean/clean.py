@@ -2,16 +2,14 @@
 
 import os
 import re
-from . import logger
-from . import models
+from .log import logger
+from . import workers
 
 MAX_ITER_TIMES = 10
 
 
 def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
     """
-    File clean up
-
     Parameters
     ----------
     fromPath:string
@@ -52,6 +50,6 @@ def cleanwork(fromPath, toPath, pattern, command, iscrawl=False, iter_times=0):
             logger.info(newPath, iter_times)
             cleanwork(newPath, toPath, pattern, command, iscrawl, iter_times)
         elif re.match(pattern, filename, flags=re.IGNORECASE):
-            Worker = models.selectWorker(command)
+            Worker = workers.selectWorker(command)
             worker = Worker(newPath, toPath, pattern)
             worker.work()

@@ -1,7 +1,10 @@
 import os
 import shutil
 from abc import ABC, abstractclassmethod
-from . import PathNotFoundError
+
+
+class PathNotFoundError(Exception):
+    pass
 
 
 class Worker(ABC):

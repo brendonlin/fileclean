@@ -1,17 +1,20 @@
 import os
 import argparse
 from .clean import cleanwork
-from . import logger
+from .log import logger
 
 TASK_TEMPLATE = template = r"""from_path,to_path,condition,command,iscrawl
 path1,path2,.*\.pyc$,delete,1
 path3,path4,.*\.(exe|msi)$,move,0"""
 
+diretory = os.path.join(os.path.expanduser("~"), "Documents", "fileclean")
+DEFAULT_TASK_PATH = os.path.join(diretory, "tasks.csv")
+
 
 def main():
     logger.info("Program start")
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config", default="tasks.csv")
+    parser.add_argument("-c", "--config", default=DEFAULT_TASK_PATH)
     parser.add_argument("--init", default=None, action="store_true")
     args = parser.parse_args()
     configPath = args.config
@@ -26,7 +29,7 @@ def main():
             logger.error(e)
             return False
         runTasks(config)
-    logger.infos("Program end")
+    logger.info("Program end")
 
 
 def runTasks(config):
@@ -39,10 +42,12 @@ def runTasks(config):
 
 
 def initTasks(targetPath=None):
-    defaultTargetPath = "tasks.csv"
-    _targetPath = targetPath if targetPath else defaultTargetPath
+    _targetPath = targetPath if targetPath else DEFAULT_TASK_PATH
     if not os.path.exists(_targetPath):
+        diretory = os.path.dirname(_targetPath)
+        if not os.path.exists(diretory):
+            os.makedirs(diretory)
         with open(_targetPath, "w") as f:
             f.write(TASK_TEMPLATE)
     else:
-        logger.info(f"{_targetPath} is exists")
+        print(f"{_targetPath} is exists")

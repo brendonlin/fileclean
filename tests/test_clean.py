@@ -1,7 +1,7 @@
 import os
 import pytest
 from fileclean import clean
-from fileclean import PathNotFoundError
+from fileclean.workers import PathNotFoundError
 
 
 @pytest.fixture

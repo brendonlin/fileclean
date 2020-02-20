@@ -14,7 +14,19 @@ Fileclean is commandline tool for file cleaning.
 pip install fileclean
 ```
 
-1. Create a task file `tasks.csv`: `fileclean --init`
-2. Run tasks: 
-   * Run task file in the current directory: `fileclean`
-   * Run task file with specitfied file path: `fileclean -c taskFilePath`
+## Usage
+Create a task file `tasks.csv` in user_home/Documents/fileclean/
+
+```
+fileclean --init
+```
+
+Run task:
+```
+fileclean
+```
+
+Run task file with specitfied file
+```
+fileclean -c taskFilePath
+```
